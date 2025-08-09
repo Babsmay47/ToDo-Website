@@ -1,0 +1,29 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+:root{
+  /* Primary Colors */
+  --primary-gradient-start: #16a085;  /* Teal Green */
+  --primary-gradient-end: #27ae60;    /* Emerald Green */
+  --primary-color: #27ae60;
+  --primary-light: rgba(39, 174, 96, 0.1);
+  --primary-border: rgba(39, 174, 96, 0.3);
+  
+  /* Accent Colors */
+  --accent-hover: #2ecc71;
+  --accent-glow: rgba(39, 174, 96, 0.4);
+  
+  /* Status Colors */
+  --success-color: #2ecc71;
+  --warning-color: #f39c12;
+  --danger-color: #e74c3c;
+  --info-color: #3498db;
+}
+
+body{
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%)
+}
