@@ -12,7 +12,65 @@
 </head>
 <body>
   
+  <!-- Header Section -->
+  <header class="header">
+    <div class="container">
+      <h1 class="app-logo">
+        <i class="fa-solid fa-circle-check"></i> 
+        TaskFlow
+      </h1>
 
+      <div class="search-field">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" name="search-input" id="search-input" placeholder="Search tasks..." class="search-input">
+      </div>
+      
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+
+  <aside class="sidebar">
+    <div class="task-input-section">
+        <div class="input-group">
+          <label class="input-label">Task Description</label>
+          <input type="text" name="task-name" class="task-input" placeholder="What needs to be done?">
+        </div>
+
+        <div class="input-group">
+          <label class="input-label">Category</label>
+          <div class="select-input">
+            <select name="input-select">
+              <option value="personal">Personal</option>
+              <option value="work">Work</option>
+              <option value="shopping">Shopping</option>
+              <option value="health">Health</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="input-group">
+          <label class="input-label">Priority</label>
+          <div class="select-input">
+            <select name="input-select">
+              <option value="high">High</option>
+              <option value="medium">Medium</option>
+              <option value="low">Low</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label class="input-label">Category</label>
+          <input type="date" name="due-date" id="due-date">
+        </div>
+
+        <button class="btn add-task-btn">
+          <i class="fa-solid fa-plus"></i>
+          <span>Add Task</span>
+        </button>
+      </div>
+  </aside>
 
   <script src="js/index.js"></script>
 </body>
