@@ -142,34 +142,8 @@ class CustomSelect {
 
   setupGlobalClickHandler() {
     document.addEventListener('click', () => {
-        this.closeAllSelects();
+      this.closeAllSelects();
     });
-  }
-
-  setupDemoEventListeners() {
-    // Demo functionality - show selected values
-    const selects = document.querySelectorAll('.custom-select select');
-    const resultDiv = document.getElementById('result');
-    
-    selects.forEach(select => {
-        select.addEventListener('change', () => {
-            this.updateResult();
-        });
-    });
-  }
-
-  updateResult() {
-    const countrySelect = document.getElementById('country-select');
-    const colorSelect = document.getElementById('color-select');
-    const sizeSelect = document.getElementById('size-select');
-    const resultDiv = document.getElementById('result');
-    
-    const results = [];
-    if (countrySelect.value) results.push(`Country: ${countrySelect.options[countrySelect.selectedIndex].text}`);
-    if (colorSelect.value) results.push(`Color: ${colorSelect.options[colorSelect.selectedIndex].text}`);
-    if (sizeSelect.value) results.push(`Size: ${sizeSelect.options[sizeSelect.selectedIndex].text}`);
-    
-    resultDiv.innerHTML = results.length ? results.join('<br>') : 'Selected values will appear here...';
   }
 }
 

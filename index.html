@@ -28,49 +28,58 @@
     </div>
   </header>
 
-  <!-- Sidebar -->
+  
 
-  <aside class="sidebar">
-    <div class="task-input-section">
-        <div class="input-group">
-          <label class="input-label">Task Description</label>
-          <input type="text" name="task-name" class="task-input" placeholder="What needs to be done?">
-        </div>
+  <div class="app-container">
 
-        <div class="input-group">
-          <label class="input-label">Category</label>
-          <div class="select-input">
-            <select name="input-select">
-              <option value="personal">Personal</option>
-              <option value="work">Work</option>
-              <option value="shopping">Shopping</option>
-              <option value="health">Health</option>
-              <option value="other">Other</option>
-            </select>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="task-input-section card">
+          <div class="input-group">
+            <label class="input-label">Task Description</label>
+            <input type="text" name="task-name" class="task-input" placeholder="What needs to be done?">
           </div>
-        </div>
-        <div class="input-group">
-          <label class="input-label">Priority</label>
-          <div class="select-input">
-            <select name="input-select">
-              <option value="high">High</option>
-              <option value="medium">Medium</option>
-              <option value="low">Low</option>
-            </select>
+          <div class="input-group">
+            <label class="input-label">Category</label>
+            <div class="select-input">
+              <select name="input-select">
+                <option value="">Select Category</option>
+                <option value="personal">Personal</option>
+                <option value="work">Work</option>
+                <option value="shopping">Shopping</option>
+                <option value="health">Health</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
           </div>
+          <div class="input-group">
+            <label class="input-label">Priority</label>
+            <div class="select-input">
+              <select name="input-select">
+                <option value="">Select Priority</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+              </select>
+            </div>
+          </div>
+          <div class="input-group">
+            <label class="input-label">Category</label>
+            <input type="date" name="due-date" id="due-date">
+          </div>
+          <button class="btn add-task-btn">
+            <i class="fa-solid fa-plus"></i>
+            <span>Add Task</span>
+          </button>
         </div>
+    </aside>
 
-        <div class="input-group">
-          <label class="input-label">Category</label>
-          <input type="date" name="due-date" id="due-date">
-        </div>
+    <!-- Main Section -->
+    <div class="main-content">
 
-        <button class="btn add-task-btn">
-          <i class="fa-solid fa-plus"></i>
-          <span>Add Task</span>
-        </button>
-      </div>
-  </aside>
+    </div>
+
+  </div>
 
   <script src="js/index.js"></script>
 </body>

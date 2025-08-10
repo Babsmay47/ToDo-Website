@@ -58,6 +58,8 @@
   --font-family-roboto: "Roboto", sans-serif;
   --font-family-poppins: "Poppins", sans-serif;
   --font-family-eb-garamond: "EB Garamond", serif;
+
+  --header-height: 8rem;
 }
 
 /*-----------------------------------*\
@@ -114,7 +116,7 @@ a {
 
 html {
   font-family: var(--font-family-roboto);
-  /* font-size: 10px; */
+  font-size: 10px;
   scroll-behavior: smooth;
 }
 
@@ -126,8 +128,8 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid --white;
-  outline-offset: 2px;
+  outline: 1px solid --white;
+  outline-offset: 1px;
 }
 
 
@@ -149,48 +151,26 @@ body {
   max-width: 1600px;
   width: 95%;
   margin-inline: auto;
-  padding-block: 1rem;
+  padding-block: 2rem;
 }
 
 .heading {
-  color: var(--white);
-  font-size: var(--heading);
+  
   line-height: 1.1;
 }
-
-.title-1 {
-  font-size: var(--title-1);
-}
-
-.title-2 {
-  font-size: var(--title-2);
-  margin-block-end: 12px;
-}
-
-.title-3 {
-  font-size: var(--title-3);
-  font-weight: var(--weight-semiBold);
-}
-
-.body-3 {
-  font-size: var(--body-3);
-}
-
-.label-1 {
-  font-size: var(--label-1);
-}
-
-.label-2 {
-  font-size: var(--label-2);
+p,
+label{
+  font-size: 1.4rem;
 }
 
 input{
-  padding: 14px 16px;
+  padding: 10px 16px;
   border-radius: 8px;
   border: 1px solid var(--border-primary);
   background: var(--input-bg);
   transition: all 300ms ease;
   color: var(--text-white);
+  font-size: 1.4rem;
 }
 
 input:focus{
@@ -201,9 +181,9 @@ input:focus{
 
 .select-input{
   position: relative;
-  /* width: 100%; */
-  /* cursor: pointer; */
-  display: inline-block;
+  width: 100%;
+  cursor: pointer;
+  display: block;
 }
 
 .select-input select {
@@ -211,13 +191,16 @@ input:focus{
 }
 
 .select-selected{
-  background-color: white;
-  border: 1px solid #ccc;
+  background-color: var(--input-bg);
+  border: 1px solid var(--border-secondary);
+  color: var(--text-white);
   border-radius: 4px;
-  padding: 10px;
+  padding: 1rem 1.6rem;
   cursor: pointer;
   user-select: none;
   position: relative;
+  transition: all .3s ease;
+  font-size: 1.4rem;
 }
 
 .select-selected:after {
@@ -228,24 +211,26 @@ input:focus{
   width: 0;
   height: 0;
   border: 6px solid transparent;
-  border-color: #999 transparent transparent transparent;
+  border-color: var(--text-white) transparent transparent transparent;
   transform: translateY(-50%);
   transition: transform 0.2s;
 }
 
 .select-selected.select-arrow-active:after {
-  border-color: transparent transparent #999 transparent;
-  transform: translateY(-50%) rotate(180deg);
+  border-color: transparent transparent var(--text-white) transparent;
+  transform: translateY(-50%) rotate(360deg);
 }
 
-.select-selected:hover {
-  background-color: #f8f8f8;
+.select-selected:focus, .select-selected:hover {
+  background-color: var(--input-bg-focus);
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--primary-light);
 }
 
 /* Style the options container */
 .select-items {
   position: absolute;
-  background-color: white;
+  background: var(--background);
   top: 100%;
   left: 0;
   right: 0;
@@ -253,9 +238,9 @@ input:focus{
   border: 1px solid #ccc;
   border-top: none;
   border-radius: 0 0 4px 4px;
-  max-height: 200px;
   overflow-y: auto;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 0 0 3px var(--primary-light);
+  font-size: 1.4rem;
 }
 
 .select-hide {
@@ -266,7 +251,7 @@ input:focus{
   padding: 10px;
   cursor: pointer;
   user-select: none;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--border-secondary);
   transition: background-color 0.2s;
 }
 
@@ -275,12 +260,24 @@ input:focus{
 }
 
 .select-items div:hover {
-  background-color: #f0f0f0;
+  background-color: var(--accent-glow);
 }
 
 .same-as-selected {
-  background-color: #007bff !important;
+  background-color: var(--accent-glow) !important;
   color: white !important;
+}
+
+.card {
+  padding: 2rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border-primary);
+  border-radius: 1rem;
+}
+
+.card:hover{
+  background-color: var(--card-bg-hover);
+  
 }
 
 .fade-in {
@@ -299,7 +296,7 @@ input:focus{
 
 /* Header Section */
 header {
-  height: 5rem;
+  height: var(--header-height);
   border-bottom: 1px solid var(--border-primary);
 }
 
@@ -348,4 +345,21 @@ header {
   border-color: var(--border-focus);
   box-shadow: 0 0 0 3px var(--primary-light);
   width: 20rem;
+}
+
+/* APP CONTAINER */
+
+.app-container{
+  height: calc(100vh - var(--header-height));
+  display: grid;
+  grid-template-columns: 20rem minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.sidebar{
+  background: var(--card-bg);
+  border-right: 1px solid var(--border-primary);
+  backdrop-filter: blur(20px);
+  padding: 30px 20px;
+  overflow-y: auto;
 }
