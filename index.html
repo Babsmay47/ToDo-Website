@@ -34,11 +34,42 @@
 
     <!-- Sidebar -->
     <aside class="sidebar">
-      <div class="task-input-section card">
-          <div class="input-group">
-            <label class="input-label">Task Description</label>
-            <input type="text" name="task-name" class="task-input" placeholder="What needs to be done?">
+      <button class="btn btn-primary add-task-btn" data-modal-open>
+        <i class="fa-solid fa-plus"></i>
+        <span>Add New Task</span>
+      </button>
+
+      <div class="filter-section">
+        <h3 class="title-3">Lists</h3>
+        <div class="filter-list">
+          <div class="filter-item">
+            
           </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Section -->
+    <div class="main-content">
+
+    </div>
+
+  </div>
+
+  <div class="modal-overlay" data-modal-overlay>
+    <div class="task-modal-input">
+      <div class="modal-header">
+        <h2 class="title-2">Add New Task</h2>
+        <div class="modal-close-btn" data-modal-close>
+          <i class="fa-solid fa-xmark"></i>
+        </div>
+      </div>
+      <form class="task-input-form">
+        <div class="input-group">
+          <label class="input-label">Task Description</label>
+          <input type="text" name="task-name" class="task-input" placeholder="What needs to be done?">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
           <div class="input-group">
             <label class="input-label">Category</label>
             <div class="select-input">
@@ -63,22 +94,22 @@
               </select>
             </div>
           </div>
-          <div class="input-group">
-            <label class="input-label">Category</label>
-            <input type="date" name="due-date" id="due-date">
-          </div>
-          <button class="btn add-task-btn">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Category</label>
+          <input type="date" name="due-date" id="due-date">
+        </div>
+        <div class="form-btns">
+          <button class="form-close-btn btn btn-secondary" data-modal-close>
+            Cancel
+          </button>
+          <button class="btn btn-primary add-task-btn">
             <i class="fa-solid fa-plus"></i>
             <span>Add Task</span>
           </button>
         </div>
-    </aside>
-
-    <!-- Main Section -->
-    <div class="main-content">
-
+      </form>
     </div>
-
   </div>
 
   <script src="js/index.js"></script>

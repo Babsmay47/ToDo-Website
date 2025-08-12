@@ -1,4 +1,25 @@
 /**
+ * MODAL OVERLAY SHOW AND HIDE
+ */
+
+const modalOpenBtn = document.querySelector('[data-modal-open]');
+const modalCloseBtn = document.querySelectorAll('[data-modal-close]');
+const modalOverlay = document.querySelector('[data-modal-overlay]');
+
+const openModalOverlay = function() {
+  modalOverlay.classList.add('show');
+}
+
+const closeModalOverlay = function() {
+  modalOverlay.classList.remove('show');
+}
+
+modalOpenBtn.addEventListener('click', openModalOverlay);
+modalCloseBtn.forEach( closeBtn => {
+  closeBtn.addEventListener('click', closeModalOverlay);
+});
+
+/** 
  * CUTOM SELECT 
  */
 
@@ -17,7 +38,6 @@ class CustomSelect {
   init() {
     this.initializeCustomSelects();
     this.setupGlobalClickHandler();
-    this.setupDemoEventListeners();
   }
 
   initializeCustomSelects() {
