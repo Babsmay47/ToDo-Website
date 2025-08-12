@@ -19,6 +19,21 @@ modalCloseBtn.forEach( closeBtn => {
   closeBtn.addEventListener('click', closeModalOverlay);
 });
 
+/**
+ * FILTER ITEMS INTERACTION
+ */
+
+const filterItems = document.querySelectorAll('.filter-item');
+
+filterItems.forEach( filterItem => {
+  filterItem.addEventListener('click', function() {
+    filterItems.forEach(i => { 
+      i.classList.remove('filter-active')
+    });
+    this.classList.add('filter-active');
+  });
+});
+
 /** 
  * CUTOM SELECT 
  */
