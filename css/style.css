@@ -139,9 +139,17 @@ body {
   /* height: 6px; for horizontal scrollbar */
 }
 
+::-webkit-scrollbar-track{
+  background: var(--input-bg);
+}
+
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
   border-radius: 2.5rem;
+}
+
+::-webkit-scrollbar-thumb:hover{
+  background: var(--text-primary);
 }
 
 /*-----------------------------------*\
@@ -355,6 +363,9 @@ input:focus{
 header {
   height: var(--header-height);
   border-bottom: 1px solid var(--border-primary);
+  position: fixed;
+  width: 100%;
+  background: ;
 }
 
 .header .container{
@@ -489,6 +500,9 @@ header {
   border-right: 1px solid var(--border-primary);
   backdrop-filter: blur(20px);
   padding: 30px 20px;
+  position: fixed;
+  top: var(--header-height);
+  height: calc(100vh - var(--header-height));
   overflow-y: auto;
 }
 
@@ -563,4 +577,16 @@ header {
   padding: .5rem 1rem;
   background: var(--input-bg);
   border-radius: .8rem;
+}
+
+.filter-item .filter-list-icon.high-priority-icon{
+  color: var(--priority-high);
+}
+
+.filter-item .filter-list-icon.mid-priority-icon{
+  color: var(--priority-medium);
+}
+
+.filter-item .filter-list-icon.low-priority-icon{
+  color: var(--priority-low);
 }
