@@ -13,7 +13,7 @@
 <body>
   
   <!-- Header Section -->
-  <header class="header">
+  <!-- <header class="header">
     <div class="container">
       <h1 class="app-logo">
         <i class="fa-solid fa-circle-check"></i> 
@@ -26,11 +26,26 @@
       </div>
       
     </div>
-  </header>
+  </header> -->
 
   
 
   <div class="app-container">
+
+    <header class="header">
+      <div class="container">
+        <h1 class="app-logo">
+          <i class="fa-solid fa-circle-check"></i> 
+          TaskFlow
+        </h1>
+
+        <div class="search-field">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" name="search-input" id="search-input" placeholder="Search tasks..." class="search-input">
+        </div>
+        
+      </div>
+    </header>
 
     <!-- Sidebar -->
     <aside class="sidebar">
@@ -40,7 +55,7 @@
       </button>
 
       <div class="filter-section">
-        <h3 class="title-3">Lists</h3>
+        <h4 class="title-4">Views</h4>
         <div class="filter-list">
           <div class="filter-item filter-active">
             <i class="fa-solid fa-border-all filter-list-icon"></i>
@@ -58,7 +73,7 @@
             <span class="filter-count">3</span>
           </div>
           <div class="filter-item">
-            <i class="fa-solid fa-check filter-list-icon"></i>
+            <i class="fa-solid fa-check-double filter-list-icon"></i>
             <span>Completed</span>
             <span class="filter-count">2</span>
           </div>
@@ -66,7 +81,7 @@
       </div>
 
       <div class="filter-section"> 
-        <h3 class="title-3">Categories</h3>
+        <h4 class="title-4">Categories</h4>
         <div class="filter-list">
           <div class="filter-item">
             <i class="fa-solid fa-briefcase filter-list-icon"></i>
@@ -87,7 +102,7 @@
       </div>
 
       <div class="filter-section">
-        <h3 class="title-3">Priority</h3>
+        <h4 class="title-4">Priority</h4>
         <div class="filter-list">
           <div class="filter-item">
             <i class="fa-solid fa-circle-exclamation filter-list-icon high-priority-icon"></i>
@@ -110,7 +125,71 @@
 
     <!-- Main Section -->
     <div class="main-content">
+      <div class="task-container">
+        <div class="task-creation-section">
+          <div class="modal-header">
+            <h2 class="title-2">Add New Task</h2>
+          </div>
+          <form class="task-input-form">
+            <div class="input-group">
+              <label class="input-label">Task Description</label>
+              <input type="text" name="task-name" class="task-input" placeholder="What needs to be done?">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+              <div class="input-group">
+                <label class="input-label">Category</label>
+                <div class="select-input">
+                  <select name="input-select">
+                    <option value="">Select Category</option>
+                    <option value="personal">Personal</option>
+                    <option value="work">Work</option>
+                    <option value="shopping">Shopping</option>
+                    <option value="health">Health</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+              <div class="input-group">
+                <label class="input-label">Priority</label>
+                <div class="select-input">
+                  <select name="input-select">
+                    <option value="">Select Priority</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="input-group">
+              <label class="input-label">Category</label>
+              <input type="date" name="due-date" id="due-date">
+            </div>
+            <div class="form-btns">
+              <button class="btn btn-primary add-task-btn">
+                <i class="fa-solid fa-plus"></i>
+                <span>Add Task</span>
+              </button>
+            </div>
+          </form>
+        </div>
 
+        <div class="task-column">
+
+          <div class="active-tasks">
+
+          </div>
+
+          <div class="completed-tasks">
+
+          </div>
+
+        </div>
+        
+      </div>
+      <aside class="task-sidebar">
+
+        </aside>
     </div>
 
   </div>
