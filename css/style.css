@@ -187,13 +187,13 @@ label{
   font-size: 2rem;
   color: var(--text-secondary);
   font-weight: 600;
-  text-transform: uppercase;
 }
 
 .title-4{
   font-size: 1.6rem;
   color: var(--text-primary);
   font-weight: 500;
+  text-transform: uppercase;
 }
 
 input{
@@ -511,7 +511,7 @@ header {
   background: var(--card-bg);
   border-right: 1px solid var(--border-primary);
   backdrop-filter: blur(20px);
-  padding: 3rem;
+  padding: 1rem 3rem 3rem;
   position: sticky;
   /* width: 20%; */
   /* position: fixed; */
@@ -549,7 +549,8 @@ header {
   margin-block: 2rem;
 }
 
-.filter-section .title-3{
+.filter-section .title-4{
+  color: var(--text-secondary);
   margin-bottom: 2rem;
 }
 
@@ -561,24 +562,23 @@ header {
 
 .filter-item{
   width: 100%;
-  padding: 1.6rem;
+  padding: 1rem;
   font-size: 1.6rem;
   display: flex;
   align-items: center;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   border-radius: 1rem;
   cursor: pointer;
   transition: all 300ms ease;
 }
 
 .filter-item:hover{
-  color: var(--text-primary);
   background-color: var(--card-bg);
 }
 
 .filter-item.filter-active{
-  background-color: var(--completed-bg);
-  color: var(--success-color);
+  background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+  color: var(--text-white);
 }
 
 .filter-item span{

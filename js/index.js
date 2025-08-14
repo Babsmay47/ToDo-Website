@@ -2,6 +2,7 @@
  * MODAL OVERLAY SHOW AND HIDE
  */
 
+/*
 const modalOpenBtn = document.querySelector('[data-modal-open]');
 const modalCloseBtn = document.querySelectorAll('[data-modal-close]');
 const modalOverlay = document.querySelector('[data-modal-overlay]');
@@ -19,6 +20,8 @@ modalCloseBtn.forEach( closeBtn => {
   closeBtn.addEventListener('click', closeModalOverlay);
 });
 
+*/
+
 /**
  * FILTER ITEMS INTERACTION
  */
@@ -33,6 +36,8 @@ filterItems.forEach( filterItem => {
     this.classList.add('filter-active');
   });
 });
+
+
 
 /** 
  * CUTOM SELECT 
