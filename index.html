@@ -55,7 +55,7 @@
       </button> -->
 
       <div class="filter-section">
-        <h4 class="title-4">Views</h4>
+        <h5 class="title-5">Views</h5>
         <div class="filter-list">
           <div class="filter-item filter-active">
             <i class="fa-solid fa-border-all filter-list-icon"></i>
@@ -75,13 +75,13 @@
           <div class="filter-item">
             <i class="fa-solid fa-check-double filter-list-icon"></i>
             <span>Completed</span>
-            <span class="filter-count">2</span>
+            <span class="filter-count" data-completed-tasks-count>2</span>
           </div>
         </div>
       </div>
 
       <div class="filter-section"> 
-        <h4 class="title-4">Categories</h4>
+        <h5 class="title-5">Categories</h5>
         <div class="filter-list">
           <div class="filter-item">
             <i class="fa-solid fa-briefcase filter-list-icon"></i>
@@ -102,7 +102,7 @@
       </div>
 
       <div class="filter-section">
-        <h4 class="title-4">Priority</h4>
+        <h5 class="title-5">Priority</h5>
         <div class="filter-list">
           <div class="filter-item">
             <i class="fa-solid fa-circle-exclamation filter-list-icon high-priority-icon"></i>
@@ -126,7 +126,7 @@
     <!-- Main Section -->
     <div class="main-content">
       <div class="task-container">
-        <div class="task-creation-section">
+        <div class="task-creation-section card">
           <div class="modal-header">
             <h2 class="title-2">Add New Task</h2>
           </div>
@@ -174,13 +174,65 @@
           </form>
         </div>
 
-        <div class="task-column">
+        <div class="task-columns">
 
-          <div class="active-tasks">
+          <div class="task-column card" data-active-tasks>
+            <div class="column-header">
+              <h4 class="title-4 column-title">
+                Active Tasks
+              </h4>
+              <span class="column-count" data-active-tasks-count>10</span>
+            </div>
+            <div class="task-list">
+
+              <div class="empty-state">
+                <div class="empty-icon">
+                  <i class="fa-solid fa-clipboard-list"></i>
+                </div>
+                <h4 class="title-4 empty-title">No Active Tasks</h4>
+                <span>Add your first task to get started</span>
+              </div>
+
+              <div class="task-card">
+                <div class="task-header">
+                  <input type="checkbox" name="task-checkbox" id="task-checkbox">
+                  <h4 class="title-4 task-title">
+                    Watch football Match
+                  </h4>
+                </div>
+
+                <div class="task-footer">
+                  <div class="task-meta">
+                    <div class="priority-dot"></div>
+                    <span class="task-category">Personal</span>
+                    <span class="task-date">Aug 12</span>
+                  </div>
+                  <div class="task-actions">
+                    <button class="task-edit-btn"></button>
+                    <button class="task-delete-btn"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
 
           </div>
 
-          <div class="completed-tasks">
+          <div class="task-column card" data-completed-tasks>
+            <div class="column-header">
+              <h4 class="title-4 column-title">
+                Completed Tasks
+              </h4>
+              <span class="column-count" data-completed-tasks-count>5</span>
+            </div>
+            <div class="task-list">
+              <div class="empty-state">
+                <div class="empty-icon">
+                  <i class="fa-solid fa-clipboard-check"></i>
+                </div>
+                <h4 class="title-4 empty-title">No Completed Tasks</h4>
+                <span>Complete tasks to see them here</span>
+              </div>
+            </div>
 
           </div>
 
