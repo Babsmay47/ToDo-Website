@@ -133,7 +133,7 @@
           <form class="task-input-form">
             <div class="input-group">
               <label class="input-label">Task Description</label>
-              <input type="text" name="task-name" class="task-input" placeholder="What needs to be done?">
+              <input type="text" name="task-name" class="task-input" placeholder="What needs to be done?" data-task-input-field>
             </div>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
               <div class="input-group">
@@ -163,7 +163,7 @@
             </div>
             <div class="input-group">
               <label class="input-label">Category</label>
-              <input type="date" name="due-date" id="due-date">
+              <input type="date" name="due-date" id="due-date" data-due-date-input>
             </div>
             <div class="form-btns">
               <button class="btn btn-primary add-task-btn">
@@ -340,8 +340,63 @@
         </div>
         
       </div>
-      <aside class="task-sidebar">
+      <aside class="card task-sidebar">
+        <div class="statistics-container">
+          <h4 class="title-4">
+            Statistics
+          </h4>
 
+          <div class="counts">
+            <div class="stat-card">
+              <span>Total</span>
+              <span class="stat-count active-count" data-total-tasks-count>10</span>
+            </div>
+            <div class="stat-card">
+              <span>Active</span>
+              <span class="stat-count active-count" data-active-tasks-count>10</span>
+            </div>
+            <div class="stat-card">
+              <span>Completed</span>
+              <span class="stat-count completed-count" data-completed-tasks-count>0</span>
+            </div>
+            <div class="stat-card">
+              <span>Overdue</span>
+              <span class="stat-count overdue-count" data-overdue-tasks-count>0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <h4 class="title-4">
+            Quick Filter
+          </h4>
+          
+          <div class="input-group">
+            <label class="input-label">Sort By</label>
+            <div class="select-input">
+              <select name="input-select">
+                <option value="">Sort By</option>
+                <option value="personal">Date Created</option>
+                <option value="work">Due Date</option>
+                <option value="shopping">Priority</option>
+                <option value="health">Category</option>
+                <option value="other">Alphabetical</option>
+              </select>
+            </div>
+          </div>
+          <div class="input-group">
+            <label class="input-label">Show</label>
+            <div class="select-input">
+              <select name="input-select">
+                <option value="">Show...</option>
+                <option value="personal">All Task</option>
+                <option value="work">Active Only</option>
+                <option value="shopping">Completed Only</option>
+                <option value="health">Overdue Only</option>
+              </select>
+            </div>
+          </div>
+        </div>
       </aside>
     </div>
 
@@ -403,6 +458,6 @@
     </div>
   </div>
 
-  <script src="js/index.js"></script>
+  <script type="module" src="js/index.js"></script>
 </body>
 </html>
