@@ -687,7 +687,6 @@ header {
   flex-direction: column;
   align-items: center;
   color: var(--text-muted);
-  display: none;
 }
 
 .empty-icon{
@@ -721,7 +720,8 @@ header {
 
 .task-header{
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: 2rem 1fr;
   align-items: flex-start;
   gap: 1rem;
   margin-bottom: 2rem;

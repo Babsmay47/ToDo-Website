@@ -68,8 +68,8 @@
             <span class="filter-count">5</span>
           </div>
           <div class="filter-item">
-            <i class="fa-solid fa-calendar-days filter-list-icon"></i>
-            <span>Upcoming</span>
+            <i class="fa-solid fa-circle-exclamation filter-list-icon"></i>
+            <span>Overdue</span>
             <span class="filter-count">3</span>
           </div>
           <div class="filter-item">
@@ -176,23 +176,14 @@
 
         <div class="task-columns">
 
-          <div class="task-column card" data-active-tasks>
+          <div class="task-column card">
             <div class="column-header">
               <h4 class="title-4 column-title">
                 Active Tasks
               </h4>
               <span class="column-count" data-active-tasks-count>10</span>
             </div>
-            <div class="task-list">
-
-              <!-- <div class="empty-state">
-                <div class="empty-icon">
-                  <i class="fa-solid fa-clipboard-list"></i>
-                </div>
-                <h4 class="title-4 empty-title">No Active Tasks</h4>
-                <span>Add your first task to get started</span>
-              </div> -->
-
+            <div class="task-list" data-active-tasks>
               <!-- <div class="task-card">
                 <div class="task-header">
                   <input type="checkbox" name="task-checkbox" id="task-checkbox" class="task-checkbox">
@@ -223,14 +214,14 @@
 
           </div>
 
-          <div class="task-column card" data-completed-tasks>
+          <div class="task-column card">
             <div class="column-header">
               <h4 class="title-4 column-title">
                 Completed Tasks
               </h4>
               <span class="column-count" data-completed-tasks-count>5</span>
             </div>
-            <div class="task-list">
+            <div class="task-list" data-completed-tasks>
               <div class="empty-state">
                 <div class="empty-icon">
                   <i class="fa-solid fa-clipboard-check"></i>
