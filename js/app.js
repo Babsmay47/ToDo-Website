@@ -43,22 +43,15 @@ filterItems.forEach( filterItem => {
 });
 
 
-
-// const task = {
-//   id: uniqueIdentifier,
-//   text: description,
-//   completed: true,
-//   priority: high,
-//   dueDate: date,
-//   category: x,
-//   createdAt: time
-// }
-
 const tasks = JSON.parse(localStorage.getItem('ToDoList')) || [];
 
-renderTodo();
+const taskInputElement = document.querySelector('[data-task-input-field]');
+const addTaskBtn = document.querySelector('.add-task-btn');
+const catgorySelectElement = document.querySelector('[data-category]');
+const prioritySelectElement = document.querySelector('[data-priority]');
+const dueDateElement = document.querySelector('[data-due-date-input]');
 
-function renderTodo() {
+function renderTasks() {
   const tasksContainer = document.querySelector('[data-active-tasks]');
 
   tasksContainer.innerHTML = '';
@@ -76,16 +69,25 @@ function renderTodo() {
     return;
   }
 
-  tasks.forEach(task => {
-    const taskElement = document.createElement('div');
+  const tasksHTML = tasks.map(task => createTaskHTML(task)).join('');
 
-    taskElement.classList.add('task-card');
+  tasksContainer.innerHTML = tasksHTML;
 
-    
-    taskElement.innerHTML = `
+  attachEventListeners();
+}
+
+function createTaskHTML(task) {
+  // Format due date for display
+  const dueDateDisplay = task.dueDate ? new Date(task.dueDate).toLocaleDateString() : 'No due date';
+
+  // Check if task is overdue
+  const isOverdue = task.dueDate && task.dueDate < new Date() && !task.completed;
+
+  return `
+    <div class="task-card ${task.completed ? 'completed' : ''} ${isOverdue ? 'overdue' : ''}" data-task-id="${task.id}">
       <div class="task-header">
-        <input type="checkbox" name="task-checkbox" id="task-checkbox" class="task-checkbox" onclick="toggleTaskComplete(${task.id});" data-completed-checkbox>
-        <h4 class="task-title">
+        <input type="checkbox" name="task-checkbox" id="task-checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''} data-task-id="${task.id}">
+        <h4 class="task-title ${task.completed ? 'crossed-out' : ''}">
           ${task.title}
         </h4>
       </div>
@@ -94,46 +96,52 @@ function renderTodo() {
         <div class="task-meta">
           <div class="priority-dot priority-${task.priority}"></div>
           <span class="task-category">${task.category}</span>
-          <span class="task-date">${task.dueDate}</span>
+          <span class="task-date">${dueDateDisplay}</span>
         </div>
         <div class="task-actions">
-          <button class="task-edit-btn" data-task-edit-btn>
+          <button class="task-edit-btn" data-task-id="${task.id}">
             <i class="fa-solid fa-pen-to-square"></i>
           </button>
-          <button class="task-delete-btn" data-task-delete-btn>
+          <button class="task-delete-btn" data-task-id="${task.id}">
             <i class="fa-solid fa-trash"></i>
           </button>
         </div>
       </div>
-    ` 
-    
-    const completedBtn = document.querySelector('[data-completed-checkbox]');
-    const deleteBtn = document.querySelector('[data-task-delete-btn]');
-    const editBtn = document.querySelector('[data-task-edit-btn]');
-
-    // completedBtn.addEventListener('click', toggleTaskComplete(task.id));
-    // deleteBtn.addEventListener('click', toggleTaskComplete(task.id));
-    // editBtn.addEventListener('click', toggleTaskComplete(task.id));
-
-    tasksContainer.appendChild(taskElement);
-    // renderTodo();
-    saveToStorage();
-  });
-
+    </div>
+  `
 }
 
-function addTodo() {
-  const inputElement = document.querySelector('[data-task-input-field]');
-  const catgorySelectElement = document.querySelector('[data-category]');
-  const prioritySelectElement = document.querySelector('[data-priority]');
-  const dueDateElement = document.querySelector('[data-due-date-input]');
-  const taskTitle = inputElement.value;
-  const taskCategory = catgorySelectElement.value;
-  const taskPriority = prioritySelectElement.value;
-  const dueDate = dueDateElement.value;
+function attachEventListeners() {
+  // Checkbox
+  document.querySelectorAll('.task-checkbox').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      const taskId = this.getAttribute('data-task-id');
+      toggleTaskComplete(taskId);
+    });
+  });
+
+  // Delete Button
+  document.querySelectorAll('.task-delete-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const taskId = this.getAttribute('data-task-id');
+      deleteTask(taskId);
+    });
+  });
+}
+
+function addTask() {
+  const taskTitle = taskInputElement.value.trim();
+  const taskCategory = catgorySelectElement?.value || 'Personal';
+  const taskPriority = prioritySelectElement?.value || 'medium';
+  const dueDateValue = dueDateElement?.value;
   const uniqueId = module.generateUniqueId();
 
-  if (!taskTitle.trim()) return;
+  const dueDate = dueDateValue ? new Date(dueDateValue) : null;
+
+  if (!taskTitle.trim()) {
+    alert('Please enter a text');
+    return;
+  };
 
   const task = {
     id: uniqueId,
@@ -147,32 +155,77 @@ function addTodo() {
 
   tasks.unshift(task);
 
-  inputElement.value = '';
-  renderTodo();
+  taskInputElement.value = '';
+
+
+  renderTasks();
+  // updateTaskCounter();
   saveToStorage();
-  console.log(dueDate);
-  console.log(tasks);
+  console.log('task added sucessfully', task);
+  console.log('All tasks:',tasks);
 }
 
-function toggleTaskComplete(id) {
-  const task = tasks.find(t => t.id === id);
+function toggleTaskComplete(taskId) {
+  const task = tasks.find(task => task.id === taskId);
 
   if(task) {
     task.completed = !task.completed;
 
-    // renderTodo();
+    renderTasks();
+    // updateTaskCounter();
     saveToStorage();
   }
 }
 
+function deleteTask(taskId) {
+  const taskIndex = tasks.findIndex(task => task.id === taskId);
 
+  if(taskIndex !== -1){
+    tasks.splice(taskIndex, 1);
+  }
 
+  renderTasks();
+  // updateTaskCounter();
+  saveToStorage();
+}
 
+function updateTaskCounter() {
+  const total = tasks.length;
+  const completed = tasks.filter(task => task.completed).length;
+  const remaining = total - completed;
+
+  if(taskCounter) {
+    taskCounter.textContent = `${remaining} of ${total} tasks remaining`;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  addTaskBtn.addEventListener('click', (e) => {
+    addTask();
+    e.preventDefault();
+  });
+
+  taskInputElement.addEventListener('keypress', function(e) {
+    if(e.key === 'Enter'){
+      addTask();
+      e.preventDefault();
+    }
+  });
+  
+  // Initial render (will show empty state)
+  renderTasks();
+  // updateTaskCounter();
+  
+  console.log('Todo app initialized!');
+});
+
+/*
 document.querySelector('.add-task-btn').addEventListener('click', (e) => {
-  addTodo();
+  addTask();
   e.preventDefault();
   console.log('Reload prevented!');
 });
+*/
 
 function saveToStorage() {
   localStorage.setItem('ToDoList', JSON.stringify(tasks));

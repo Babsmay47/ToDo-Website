@@ -760,6 +760,10 @@ header {
   cursor: text;
 }
 
+.crossed-out{
+  text-decoration: line-through;
+}
+
 .task-footer{
   display: flex;
   align-items: center;
@@ -796,6 +800,7 @@ header {
   background: var(--accent-glow);
   border: 1px solid var(--primary-border);
   border-radius: 1rem;
+  text-transform: capitalize;
 }
 
 .task-date{
