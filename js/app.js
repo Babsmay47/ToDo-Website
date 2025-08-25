@@ -52,27 +52,38 @@ const prioritySelectElement = document.querySelector('[data-priority]');
 const dueDateElement = document.querySelector('[data-due-date-input]');
 
 function renderTasks() {
-  const tasksContainer = document.querySelector('[data-active-tasks]');
+  const activeTasks = tasks.filter(task => !task.completed);
+  const completedTasks = tasks.filter(task => task.completed);
+  const activeTasksContainer = document.querySelector('[data-active-tasks]');
+  const completedTasksContainer = document.querySelector('[data-completed-tasks]');
 
-  tasksContainer.innerHTML = '';
+  activeTasksContainer.innerHTML = '';
+  completedTasksContainer.innerHTML = '';
 
-  if(tasks.length === 0){
-    tasksContainer.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-icon">
-          <i class="fa-solid fa-clipboard-list"></i>
-        </div>
-        <h4 class="title-4 empty-title">No Active Tasks</h4>
-        <span>Add your first task to get started</span>
+  const activeEmpty = `
+    <div class="empty-state">
+      <div class="empty-icon">
+        <i class="fa-solid fa-clipboard-list"></i>
       </div>
-    `
-    return;
-  }
+      <h4 class="title-4 empty-title">No Active Tasks</h4>
+      <span>Add your first task to get started</span>
+    </div>
+  `;
+  const completedEmpty = `
+    <div class="empty-state">
+      <div class="empty-icon">
+        <i class="fa-solid fa-clipboard-check"></i>
+      </div>
+      <h4 class="title-4 empty-title">No Completed Tasks</h4>
+      <span>Complete tasks to see them here</span>
+    </div>
+  `;
+  const activeTasksHTML = activeTasks.length === 0 ? activeEmpty : activeTasks.map(task => createTaskHTML(task)).join('');
+  const completedTasksHTML = completedTasks.length === 0 ? completedEmpty : completedTasks.map(task => createTaskHTML(task)).join('');
 
-  const tasksHTML = tasks.map(task => createTaskHTML(task)).join('');
-
-  tasksContainer.innerHTML = tasksHTML;
-
+  activeTasksContainer.innerHTML = activeTasksHTML;
+  completedTasksContainer.innerHTML = completedTasksHTML;
+  
   attachEventListeners();
 }
 
