@@ -54,11 +54,11 @@ const dueDateElement = document.querySelector('[data-due-date-input]');
 function renderTasks() {
   const activeTasks = tasks.filter(task => !task.completed);
   const completedTasks = tasks.filter(task => task.completed);
-  const activeTasksContainer = document.querySelector('[data-active-tasks]');
-  const completedTasksContainer = document.querySelector('[data-completed-tasks]');
+  const activeContainer = document.querySelector('[data-active-tasks]');
+  const completedContainer = document.querySelector('[data-completed-tasks]');
 
-  activeTasksContainer.innerHTML = '';
-  completedTasksContainer.innerHTML = '';
+  activeContainer.innerHTML = '';
+  completedContainer.innerHTML = '';
 
   const activeEmpty = `
     <div class="empty-state">
@@ -78,12 +78,31 @@ function renderTasks() {
       <span>Complete tasks to see them here</span>
     </div>
   `;
-  const activeTasksHTML = activeTasks.length === 0 ? activeEmpty : activeTasks.map(task => createTaskHTML(task)).join('');
-  const completedTasksHTML = completedTasks.length === 0 ? completedEmpty : completedTasks.map(task => createTaskHTML(task)).join('');
 
-  activeTasksContainer.innerHTML = activeTasksHTML;
-  completedTasksContainer.innerHTML = completedTasksHTML;
-  
+  console.log(`found ${activeTasks.length} active tasks and ${completedTasks.length} completed tasks`);
+
+  // const activeTasksHTML = activeTasks.length === 0 ? activeEmpty : activeTasks.map(task => createTaskHTML(task)).join('');
+  // const completedTasksHTML = completedTasks.length === 0 ? completedEmpty : completedTasks.map(task => createTaskHTML(task)).join('');
+
+  if(activeTasks.length === 0){
+    activeContainer.innerHTML = activeEmpty;
+  } else{
+    activeTasks.forEach(task => {
+      const activeHTML = createTaskHTML(task);
+      activeContainer.appendChild(activeHTML)
+    });
+  }
+
+
+  if(completedTasks.length === 0){
+    completedContainer.innerHTML = completedEmpty;
+  } else{
+    completedTasks.forEach(task => {
+      const completedHTML = createTaskHTML(task);
+      completedContainer.appendChild(completedHTML);
+    });
+  }
+
   attachEventListeners();
 }
 
@@ -94,32 +113,37 @@ function createTaskHTML(task) {
   // Check if task is overdue
   const isOverdue = task.dueDate && task.dueDate < new Date() && !task.completed;
 
-  return `
-    <div class="task-card ${task.completed ? 'completed' : ''} ${isOverdue ? 'overdue' : ''}" data-task-id="${task.id}">
-      <div class="task-header">
-        <input type="checkbox" name="task-checkbox" id="task-checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''} data-task-id="${task.id}">
-        <h4 class="task-title ${task.completed ? 'crossed-out' : ''}">
-          ${task.title}
-        </h4>
-      </div>
+  const taskDiv = document.createElement('div');
+  taskDiv.className = `task-card ${task.completed ? 'completed' : ''} ${isOverdue ? 'overdue' : ''}`;
+  taskDiv.setAttribute('data-task-id', task.id);
+  
 
-      <div class="task-footer">
-        <div class="task-meta">
-          <div class="priority-dot priority-${task.priority}"></div>
-          <span class="task-category">${task.category}</span>
-          <span class="task-date">${dueDateDisplay}</span>
-        </div>
-        <div class="task-actions">
-          <button class="task-edit-btn" data-task-id="${task.id}">
-            <i class="fa-solid fa-pen-to-square"></i>
-          </button>
-          <button class="task-delete-btn" data-task-id="${task.id}">
-            <i class="fa-solid fa-trash"></i>
-          </button>
-        </div>
+  taskDiv.innerHTML = `
+    <div class="task-header">
+      <input type="checkbox" name="task-checkbox" id="task-checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''} data-task-id="${task.id}">
+      <h4 class="task-title ${task.completed ? 'crossed-out' : ''}">
+        ${task.title}
+      </h4>
+    </div>
+
+    <div class="task-footer">
+      <div class="task-meta">
+        <div class="priority-dot priority-${task.priority}"></div>
+        <span class="task-category">${task.category}</span>
+        <span class="task-date">${dueDateDisplay}</span>
+      </div>
+      <div class="task-actions">
+        <button class="task-edit-btn" data-task-id="${task.id}">
+          <i class="fa-solid fa-pen-to-square"></i>
+        </button>
+        <button class="task-delete-btn" data-task-id="${task.id}">
+          <i class="fa-solid fa-trash"></i>
+        </button>
       </div>
     </div>
-  `
+  `;
+
+  return taskDiv;
 }
 
 function attachEventListeners() {
