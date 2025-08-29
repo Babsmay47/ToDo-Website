@@ -147,6 +147,8 @@ function createTaskHTML(task) {
 }
 
 function attachEventListeners() {
+  
+  //the simple approach of addding event listeners
   // Checkbox
   document.querySelectorAll('.task-checkbox').forEach(checkbox => {
     checkbox.addEventListener('change', function() {
@@ -158,10 +160,14 @@ function attachEventListeners() {
   // Delete Button
   document.querySelectorAll('.task-delete-btn').forEach(button => {
     button.addEventListener('click', function() {
+      console.log('Delete button clicked!');
       const taskId = this.getAttribute('data-task-id');
       deleteTask(taskId);
     });
   });
+  
+
+  // console.log('Attaching listeners to', document.querySelectorAll('.task-delete-btn').length, 'delete buttons');
 }
 
 function addTask() {
@@ -203,13 +209,31 @@ function addTask() {
 function toggleTaskComplete(taskId) {
   const task = tasks.find(task => task.id === taskId);
 
-  if(task) {
-    task.completed = !task.completed;
-
-    renderTasks();
-    // updateTaskCounter();
-    saveToStorage();
+  if(!task) {
+    console.log('error Task not found');
+    return;
   }
+
+  task.completed = !task.completed;
+
+  /*
+  if(task.completed) {
+    task.completedAt = Date.now();
+    console.log(`task completed at ${completedAt.toLocaleString()}`);
+  }else{
+    task.completedAt = null;
+    console.log('task marked as active again');
+  }
+  */
+
+  renderTasks();
+  // updateTaskCounter();
+  saveToStorage();
+
+  showToast(task.completed ? 
+    `✅ "${task.text}" completed!` : 
+    `🔄 "${task.text}" marked active`
+  );
 }
 
 function deleteTask(taskId) {
@@ -232,6 +256,31 @@ function updateTaskCounter() {
   if(taskCounter) {
     taskCounter.textContent = `${remaining} of ${total} tasks remaining`;
   }
+}
+
+function showToast(message) {
+  
+}
+
+function clearAllCompletedTasks(){ 
+  const completedTasks = tasks.filter(task => task.completed);
+  const completedCount = completedTasks.length;
+  if (completedCount === 0) {
+      alert("No completed tasks to clear!");
+      return;
+  }
+
+  const confirmMessage = `Are you sure you want to clear ${completedCount} completed task${completedCount === 1 ? '' : 's'}?`;
+
+  if(confirm(confirmMessage)){ 
+    const activeTasks =  tasks.filter(task => !task.completed);
+    tasks = activeTasks;
+
+    console.log(`Successfully cleared ${completedCount} completed tasks!`);
+
+    renderTasks();
+    saveToStorage();
+  } 
 }
 
 document.addEventListener('DOMContentLoaded', function() {

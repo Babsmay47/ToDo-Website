@@ -879,3 +879,20 @@ height: fit-content;
   font-weight: 700;
   color: var(--accent-hover);
 }
+
+.toast{
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  background: var(--primary-gradient-end);
+  color: var(--text-white);
+  padding: 2rem;
+  font-size: 2rem;
+  animation: slideIn .3s ease;
+}
+
+@keyframes slideIn {
+  0%{
+    
+  }
+}
