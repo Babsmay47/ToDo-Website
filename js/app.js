@@ -50,6 +50,7 @@ const addTaskBtn = document.querySelector('.add-task-btn');
 const catgorySelectElement = document.querySelector('[data-category]');
 const prioritySelectElement = document.querySelector('[data-priority]');
 const dueDateElement = document.querySelector('[data-due-date-input]');
+const clearAllCompletedBtn = document.querySelector('[data-clear-completed]');
 
 function renderTasks() {
   const activeTasks = tasks.filter(task => !task.completed);
@@ -165,8 +166,6 @@ function attachEventListeners() {
       deleteTask(taskId);
     });
   });
-  
-
   // console.log('Attaching listeners to', document.querySelectorAll('.task-delete-btn').length, 'delete buttons');
 }
 
@@ -202,7 +201,7 @@ function addTask() {
   renderTasks();
   // updateTaskCounter();
   saveToStorage();
-  console.log('task added sucessfully', task);
+  showToast('Task added sucessfully', 'success');
   console.log('All tasks:',tasks);
 }
 
@@ -231,8 +230,8 @@ function toggleTaskComplete(taskId) {
   saveToStorage();
 
   showToast(task.completed ? 
-    `✅ "${task.text}" completed!` : 
-    `🔄 "${task.text}" marked active`
+    `✅ "${task.title}" completed!` : 
+    `🔄 "${task.title}" Task reopened`, 'success'
   );
 }
 
@@ -245,6 +244,7 @@ function deleteTask(taskId) {
 
   renderTasks();
   // updateTaskCounter();
+  showToast('Task deleted', 'info');
   saveToStorage();
 }
 
@@ -258,13 +258,46 @@ function updateTaskCounter() {
   }
 }
 
-function showToast(message) {
-  
+function showToast(message, type = 'info') {
+  const toast = document.createElement('div');
+  toast.style.cssText = `
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    max-width: 30rem;
+    background: ${type === 'success' ? 'var(--success-color)' : type === 'error' ? 'var(--danger-color)' : type === 'warning' ? 'var(--warning-color)' : 'var(--info-color)'};
+    color: var(--text-white);
+    padding: 1.2rem 2rem;
+    font-size: 2rem;
+    font-weight: 500;
+    border-radius: 8px;
+    transform: translateX(100%);
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    word-wrap: break-word;
+    transition: all 300ms ease;
+    opacity: 0;
+  `;
+  toast.textContent = message;
+  document.body.appendChild(toast);
+
+  // Animate in
+  setTimeout(() => {
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(0)';
+  }, 10);
+
+  // Remove after 3 seconds
+  setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(100%)';
+      setTimeout(() => toast.remove(), 300);
+  }, 3000);
 }
 
-function clearAllCompletedTasks(){ 
-  const completedTasks = tasks.filter(task => task.completed);
-  const completedCount = completedTasks.length;
+function clearAllCompletedTasks(){
+  console.log("Function called!");  
+  const completedCount = tasks.filter(task => task.completed).length;
   if (completedCount === 0) {
       alert("No completed tasks to clear!");
       return;
@@ -273,10 +306,13 @@ function clearAllCompletedTasks(){
   const confirmMessage = `Are you sure you want to clear ${completedCount} completed task${completedCount === 1 ? '' : 's'}?`;
 
   if(confirm(confirmMessage)){ 
-    const activeTasks =  tasks.filter(task => !task.completed);
-    tasks = activeTasks;
-
-    console.log(`Successfully cleared ${completedCount} completed tasks!`);
+    for(let i = tasks.length - 1; i >= 0; i--){
+      if(tasks[i].completed) {
+        tasks.splice(i, 1);
+      }
+    }
+    
+    showToast(`Successfully cleared ${completedCount} completed tasks!`, 'success');
 
     renderTasks();
     saveToStorage();
@@ -295,6 +331,9 @@ document.addEventListener('DOMContentLoaded', function() {
       e.preventDefault();
     }
   });
+
+  // Clear All Completed
+  clearAllCompletedBtn.addEventListener('click', clearAllCompletedTasks);
   
   // Initial render (will show empty state)
   renderTasks();

@@ -712,6 +712,7 @@ header {
   border-radius: 2rem;
   cursor: pointer;
   transition: all 300ms ease;
+  animation: slideIn 300ms ease;
 }
 
 .task-card:hover{
@@ -880,19 +881,60 @@ height: fit-content;
   color: var(--accent-hover);
 }
 
+.clear-completed-btn{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1.2rem 1.6rem;
+  background: rgba(231, 76, 60, 0.1);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  color: var(--danger-color);
+  transition: all 300ms ease;
+}
+
+.clear-completed-btn:hover{
+  background-color: rgba(231, 76, 60, 0.2);
+  transform: translateY(-1px);
+}
+
 .toast{
   position: fixed;
+  max-width: 30rem;
   top: 2rem;
   right: 2rem;
-  background: var(--primary-gradient-end);
+  background: var(--info-color);
   color: var(--text-white);
-  padding: 2rem;
+  padding: 1.2rem 2rem;
   font-size: 2rem;
-  animation: slideIn .3s ease;
+  font-weight: 500;
+  border-radius: 8px;
+  transform: translateX(100%);
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  word-wrap: break-word;
+  transition: all 300ms ease;
 }
 
 @keyframes slideIn {
   0%{
-    
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100%{
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
