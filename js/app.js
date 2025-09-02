@@ -172,7 +172,7 @@ function attachEventListeners() {
 
 function addTask() {
   const taskTitle = taskInputElement.value.trim();
-  const taskCategory = catgorySelectElement?.value || 'Personal';
+  const taskCategory = catgorySelectElement?.value || 'personal';
   const taskPriority = prioritySelectElement?.value || 'medium';
   const dueDateValue = dueDateElement?.value;
   const uniqueId = module.generateUniqueId();
@@ -250,75 +250,76 @@ function deleteTask(taskId) {
 }
 
 function calculateTaskStats(){
-  const total = tasks.length;
-  const completed = tasks.filter(task => task.completed).length;
-  const active = tasks.filter(task => !task.completed).length;
-  const overdue = 0;
-  const today = 0;
-  const work = 0;
-  const personal = 0;
-  const shopping = 0;
-  const high = 0;
-  const mid = 0;
-  const low = 0;
+  let total = tasks.length;
+  let completed = 0, active = 0, overdue = 0, today = 0;
+  let work = 0, personal = 0, shopping = 0, health = 0;
+  let high = 0, mid = 0, low = 0;
+  
+  const now = new Date().toDateString();
+
+  for (const task of tasks){
+    if(task.completed) completed++;
+    else active++;
+
+    if(task.dueDate) {
+      const due = new Date(task.dueDate).toDateString();
+      if(due < now && !task.completed) overdue++;
+      if(due === now) today++;
+    }
+
+    switch (task.category) {
+      case 'work': work++; break;
+      case 'personal': personal++; break;
+      case 'shopping' : shopping++; break;
+      case 'health': health++; break;
+    }
+
+    switch(task.priority) {
+      case 'high': high++; break;
+      case 'medium': mid++; break;
+      case 'low': low++; break;
+    }
+  }
 
   console.log('Task Stats:', total, completed, active, overdue);
-  return { total, completed, active, overdue, today, work, personal, shopping, high, mid, low };
+  return { total, completed, active, overdue, today, work, personal, shopping,health, high, mid, low };
 }
 
 function updateTaskCounter() {
   const stats = calculateTaskStats();
 
-  const totalElements = document.querySelectorAll('[data-total-tasks-count]');
-  const completedElements = document.querySelectorAll('[data-completed-tasks-count]');
-  const activeElements = document.querySelectorAll('[data-active-tasks-count]');
-  const overdueElements = document.querySelectorAll('[data-overdue-tasks-count]');
-  const highPriorityElement = document.querySelector('[data-high-prior-count]');
-  const midPriorityElement = document.querySelector('[data-mid-prior-count]');
-  const lowPriorityElement = document.querySelector('[data-low-prior-count]');
-  const todayElement = document.querySelector('[data-today-count]');
-  const workElement = document.querySelector('[data-work-count]');
-  const personalElement = document.querySelector('[data-personal-count]');
-  const shoppingElement = document.querySelector('[data-shopping-count]');
-
-  if(totalElements) {
-    totalElements.forEach(totalElement => {
-      totalElement.textContent = stats.total;
-    });
+  const mappings = {
+    total: '[data-total-tasks-count]',
+    completed: '[data-completed-tasks-count]',
+    active: '[data-active-tasks-count]',
+    overdue: '[data-overdue-tasks-count]',
+    today: '[data-today-count]',
+    work: '[data-work-count]',
+    personal: '[data-personal-count]',
+    shopping: '[data-shopping-count]',
+    health: '[data-health-count]',
+    high: '[data-high-prior-count]',
+    mid: '[data-mid-prior-count]',
+    low: '[data-low-prior-count]'
   }
 
-  if(completedElements) {
-    completedElements.forEach(completedElement => {
-      completedElement.textContent = stats.completed;
-      if(stats.completed > 0){
-        completedElement.classList.add('success');
-      }
+  Object.entries(mappings).forEach(([key, selector]) => {
+    const elements = document.querySelectorAll(selector);
+    elements.forEach(el => {
+      el.textContent = stats[key];
     });
-  }
+  });
 
-  if(activeElements) {
-    activeElements.forEach(activeElement => {
-      activeElement.textContent = stats.active;
-    });
-    
-  }
-
+  const overdueElements = document.querySelectorAll(mappings.overdue);
   if(overdueElements) {
     overdueElements.forEach(overdueElement => {
-      overdueElement.textContent = stats.overdue;
       if(stats.overdue > 0){
         overdueElement.classList.add('danger');
+      } else {
+        overdueElement.classList.remove('danger');
       }
     });
   }
-
-  todayElement.textContent = stats.today;
-  highPriorityElement.textContent = stats.high;
-  midPriorityElement.textContent = stats.mid;
-  lowPriorityElement.textContent = stats.low;
-  workElement.textContent = stats.work;
-  personalElement.textContent = stats.personal;
-  shoppingElement.textContent = stats.shopping;
 
   console.log('Counters updated successfully');
 }
