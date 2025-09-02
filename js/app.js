@@ -104,6 +104,7 @@ function renderTasks() {
     });
   }
 
+  updateTaskCounter();
   attachEventListeners();
 }
 
@@ -248,14 +249,78 @@ function deleteTask(taskId) {
   saveToStorage();
 }
 
-function updateTaskCounter() {
+function calculateTaskStats(){
   const total = tasks.length;
   const completed = tasks.filter(task => task.completed).length;
-  const remaining = total - completed;
+  const active = tasks.filter(task => !task.completed).length;
+  const overdue = 0;
+  const today = 0;
+  const work = 0;
+  const personal = 0;
+  const shopping = 0;
+  const high = 0;
+  const mid = 0;
+  const low = 0;
 
-  if(taskCounter) {
-    taskCounter.textContent = `${remaining} of ${total} tasks remaining`;
+  console.log('Task Stats:', total, completed, active, overdue);
+  return { total, completed, active, overdue, today, work, personal, shopping, high, mid, low };
+}
+
+function updateTaskCounter() {
+  const stats = calculateTaskStats();
+
+  const totalElements = document.querySelectorAll('[data-total-tasks-count]');
+  const completedElements = document.querySelectorAll('[data-completed-tasks-count]');
+  const activeElements = document.querySelectorAll('[data-active-tasks-count]');
+  const overdueElements = document.querySelectorAll('[data-overdue-tasks-count]');
+  const highPriorityElement = document.querySelector('[data-high-prior-count]');
+  const midPriorityElement = document.querySelector('[data-mid-prior-count]');
+  const lowPriorityElement = document.querySelector('[data-low-prior-count]');
+  const todayElement = document.querySelector('[data-today-count]');
+  const workElement = document.querySelector('[data-work-count]');
+  const personalElement = document.querySelector('[data-personal-count]');
+  const shoppingElement = document.querySelector('[data-shopping-count]');
+
+  if(totalElements) {
+    totalElements.forEach(totalElement => {
+      totalElement.textContent = stats.total;
+    });
   }
+
+  if(completedElements) {
+    completedElements.forEach(completedElement => {
+      completedElement.textContent = stats.completed;
+      if(stats.completed > 0){
+        completedElement.classList.add('success');
+      }
+    });
+  }
+
+  if(activeElements) {
+    activeElements.forEach(activeElement => {
+      activeElement.textContent = stats.active;
+    });
+    
+  }
+
+  if(overdueElements) {
+    overdueElements.forEach(overdueElement => {
+      overdueElement.textContent = stats.overdue;
+      if(stats.overdue > 0){
+        overdueElement.classList.add('danger');
+      }
+    });
+  }
+
+  todayElement.textContent = stats.today;
+  highPriorityElement.textContent = stats.high;
+  midPriorityElement.textContent = stats.mid;
+  lowPriorityElement.textContent = stats.low;
+  workElement.textContent = stats.work;
+  personalElement.textContent = stats.personal;
+  shoppingElement.textContent = stats.shopping;
+
+  console.log('Counters updated successfully');
 }
 
 function showToast(message, type = 'info') {
@@ -355,3 +420,4 @@ function saveToStorage() {
 }
 
 console.log(tasks);
+calculateTaskStats();

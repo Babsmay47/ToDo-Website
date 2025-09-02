@@ -354,6 +354,22 @@ input:focus{
   color: var(--text-primary);
 }
 
+.success{
+  color: var(--success-color);
+}
+
+.danger{
+  color: var(--danger-color);
+}
+
+.warning{
+  color: var(--warning-color);
+}
+
+.info{
+  color: var(--info-color);
+}
+
 .fade-in {
   animation: fade-in 250ms ease forwards;
 }
@@ -878,7 +894,6 @@ height: fit-content;
 .stat-count{
   font-size: 2rem;
   font-weight: 700;
-  color: var(--accent-hover);
 }
 
 .clear-completed-btn{
