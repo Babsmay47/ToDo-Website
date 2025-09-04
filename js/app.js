@@ -110,7 +110,8 @@ function renderTasks() {
 
 function createTaskHTML(task) {
   // Format due date for display
-  const dueDateDisplay = task.dueDate ? new Date(task.dueDate).toLocaleDateString() : 'No due date';
+  const options = { year: 'numeric', month: 'Short', day: 'numeric'};
+  const dueDateDisplay = task.dueDate ? formatDate(task.dueDate) : '';
 
   // Check if task is overdue
   const isOverdue = task.dueDate && task.dueDate < new Date() && !task.completed;
@@ -177,7 +178,7 @@ function addTask() {
   const dueDateValue = dueDateElement?.value;
   const uniqueId = module.generateUniqueId();
 
-  const dueDate = dueDateValue ? new Date(dueDateValue) : null;
+  const dueDate = dueDateValue ? dueDateValue : null;
 
   if (!taskTitle.trim()) {
     alert('Please enter a text');
@@ -200,7 +201,7 @@ function addTask() {
 
 
   renderTasks();
-  // updateTaskCounter();
+  updateTaskCounter();
   saveToStorage();
   showToast('Task added sucessfully', 'success');
   console.log('All tasks:',tasks);
@@ -227,7 +228,7 @@ function toggleTaskComplete(taskId) {
   */
 
   renderTasks();
-  // updateTaskCounter();
+  updateTaskCounter();
   saveToStorage();
 
   showToast(task.completed ? 
@@ -249,6 +250,43 @@ function deleteTask(taskId) {
   saveToStorage();
 }
 
+function isOverdue(task){
+  if(task.dueDate){
+    const today = new Date().toDateString();
+    const due = new Date(task.dueDate).toDateString();
+
+    if (due < today && !task.completed) return true;
+  }
+}
+
+function isDueToday(task){
+  const today = new Date().toDateString();
+  const date = new Date(task.dueDate).toDateString();
+
+  if(date === today) return true;
+}
+
+function formatDate(dateString){
+  const date = new Date(dateString);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  date.setHours(0, 0, 0, 0);
+  const diffTime = date - today;
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  if (diffDays === 0) return 'Today';
+  if(diffDays === 1) return 'Tomorrow';
+  if(diffDays === -1) return 'Yesterday';
+  if(diffDays > 1 && diffDays <= 7) return `${diffDays} days`;
+  if(diffDays < -1 && diffDays >= -7) return `${Math.abs(diffDays)} days ago`;
+
+  return date.toLocaleDateString('en-US', { 
+    month: 'short', 
+    day: 'numeric',
+    year: date.getFullYear() !== today.getFullYear() ? 'numeric' : undefined
+  });
+}
+
 function calculateTaskStats(){
   let total = tasks.length;
   let completed = 0, active = 0, overdue = 0, today = 0;
@@ -261,11 +299,14 @@ function calculateTaskStats(){
     if(task.completed) completed++;
     else active++;
 
-    if(task.dueDate) {
-      const due = new Date(task.dueDate).toDateString();
-      if(due < now && !task.completed) overdue++;
-      if(due === now) today++;
-    }
+    // Without using function
+    // if(task.dueDate) {
+    //   const due = new Date(task.dueDate).toDateString();
+    //   if(due < now && !task.completed) overdue++;
+    //   if(due === now) today++;
+    // }
+    if(isOverdue(task)) overdue++;
+    if(isDueToday(task)) today++; 
 
     switch (task.category) {
       case 'work': work++; break;
@@ -381,6 +422,7 @@ function clearAllCompletedTasks(){
     showToast(`Successfully cleared ${completedCount} completed tasks!`, 'success');
 
     renderTasks();
+    updateTaskCounter();
     saveToStorage();
   } 
 }
